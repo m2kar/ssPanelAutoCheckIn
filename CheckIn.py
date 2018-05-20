@@ -11,6 +11,8 @@ import argparse
 import time
 import logging
 
+from tkinter import Tk
+
 logger = logging.getLogger(__name__)
 logger.setLevel(level = logging.INFO)
 handler = logging.FileHandler("log.txt")
@@ -18,6 +20,7 @@ handler.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+
 
 def checkin(email,passwd):
     se=requests.Session()
@@ -31,8 +34,7 @@ def checkin(email,passwd):
     time.sleep(2)
     checkin=se.post(r'http://my.ssrcube.com/user/checkin')
     logger.info(str(checkin.json()))
-    logger.info("Finish")
-    logger.info("----------------")
+    logger.info("Finish----------------")
 
 if __name__ == '__main__':
     logger.info("----------------")
@@ -45,6 +47,8 @@ if __name__ == '__main__':
     passwd=args.passwd
     print("email: {}\npasswd:{}\n".format(email,passwd))
     checkin(email,passwd)
+    # Tk().mainloop()
+    exit()
 
 
 

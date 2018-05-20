@@ -1,3 +1,2 @@
 --index-url https://mirrors.aliyun.com/pypi/
 requests
-pyinstaller
