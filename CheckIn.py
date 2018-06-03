@@ -21,9 +21,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-
-def checkin(email,passwd):
-    se=requests.Session()
+def _do_checkin(se:requests.Session,email,passwd):
     se.headers = {
         'Accept':'application/json, text/javascript, */*; q=0.01',
         'User-Agent': r'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139',
@@ -36,17 +34,30 @@ def checkin(email,passwd):
     logger.info(str(checkin.json()))
     logger.info("Finish----------------")
 
+def checkin(email,passwd):
+    se=requests.Session()
+    _do_checkin(se,email,passwd)
+
+def checkin_with_proxy(email, passwd, proxy):
+    se=requests.Session()
+    se.proxies["http"]=proxy
+    _do_checkin(se,email,passwd)
+
 if __name__ == '__main__':
     logger.info("----------------")
     logger.info("Start print log")
     parse=argparse.ArgumentParser()
     parse.add_argument('-m','--email',dest="email",required=True,type=str)
     parse.add_argument('-p','--password',dest='passwd',required=True,type=str)
+    parse.add_argument('--proxy',dest='proxy',required=False,type=str)
     args=parse.parse_args()
     email=args.email
     passwd=args.passwd
     print("email: {}\npasswd:{}\n".format(email,passwd))
-    checkin(email,passwd)
+    if not args.proxy:
+        checkin(email,passwd)
+    if args.proxy:
+        checkin_with_proxy(email,passwd,args.proxy)
     # Tk().mainloop()
     exit()
 
