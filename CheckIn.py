@@ -15,11 +15,13 @@ from tkinter import Tk
 
 logger = logging.getLogger(__name__)
 logger.setLevel(level = logging.INFO)
-handler = logging.FileHandler("log.txt")
+handler = logging.FileHandler("ssr_checkin_log.txt")
 handler.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+
+website="https://nicessrr.com"
 
 def _do_checkin(se:requests.Session,email,passwd):
     se.headers = {
@@ -27,10 +29,10 @@ def _do_checkin(se:requests.Session,email,passwd):
         'User-Agent': r'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139',
         'Content-Type':r'application/x-www-form-urlencoded; charset=UTF-8'
     }
-    login=se.post(r'http://my.ssrcube.com/auth/login',data={'email':email,'passwd':passwd,'code':''})
+    login=se.post(r'{}/auth/login'.format(website),data={'email':email,'passwd':passwd,'code':''})
     logger.info(str(login.json()))
     time.sleep(2)
-    checkin=se.post(r'http://my.ssrcube.com/user/checkin')
+    checkin=se.post(r'{}/user/checkin'.format(website))
     logger.info(str(checkin.json()))
     logger.info("Finish----------------")
 
