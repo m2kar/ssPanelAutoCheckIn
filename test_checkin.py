@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 """
 
 """
@@ -12,5 +12,4 @@ from unittest import TestCase
 class TestCheckin(TestCase):
     def test_checkin(self):
         from CheckIn import checkin
-        checkin(r"email",r"passwd")
-
+        checkin(r"email", r"passwd", "https://v2.freeok.xyz/")
