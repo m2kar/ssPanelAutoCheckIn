@@ -70,7 +70,7 @@ if __name__ == '__main__':
     email = args.email
     passwd = args.passwd
     site = args.site
-    print("email: {}\npasswd:{}\nsite:{}\n".format(email, passwd, site))
+    print("email: {}\npasswd:{}\nsite:{}\n".format(email, "*", site))
     if not args.proxy:
         print(checkin(email, passwd, site))
     if args.proxy:
